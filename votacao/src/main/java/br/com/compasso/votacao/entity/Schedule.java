@@ -22,12 +22,20 @@ public class Schedule {
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private EnumStatusSchedule status;
-	private LocalDateTime createdAt = LocalDateTime.now();
+	private LocalDateTime createdAt;
 	@OneToOne
-	private User user;
+	private User creator;
 	private Integer votesYes = 0;
 	private Integer votesNo = 0;
 	
+	
+	
+	public Schedule(String title, String description) {
+		this.title = title;
+		this.description = description;
+		this.createdAt =  LocalDateTime.now();
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -68,12 +76,12 @@ public class Schedule {
 		this.createdAt = createdAt;
 	}
 	
-	public User getUser() {
-		return user;
+	public User getCreator() {
+		return creator;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 	
 	public Integer getVotesYes() {

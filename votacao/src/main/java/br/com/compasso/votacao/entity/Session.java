@@ -29,7 +29,7 @@ public class Session {
 	private EnumSessionStatus status = EnumSessionStatus.ABERTA;
 	private Integer time;
 	@OneToMany
-	private List<EnumVote> votes;
+	private List<Vote> votes;
 	
 	
 	public Long getId() {
@@ -80,11 +80,11 @@ public class Session {
 		this.time = time;
 	}
 	
-	public List<EnumVote> getVotes() {
+	public List<Vote> getVotes() {
 		return votes;
 	}
 	
-	public void setVotes(List<EnumVote> votes) {
+	public void setVotes(List<Vote> votes) {
 		this.votes = votes;
 	}
 	
