@@ -28,12 +28,13 @@ public class Schedule {
 	private Integer votesYes = 0;
 	private Integer votesNo = 0;
 	
-	
-	
+	public Schedule() {}
+
 	public Schedule(String title, String description) {
 		this.title = title;
 		this.description = description;
-		this.createdAt =  LocalDateTime.now();
+		this.status = EnumStatusSchedule.OK;
+		this.createdAt = LocalDateTime.now();
 	}
 
 	public Long getId() {

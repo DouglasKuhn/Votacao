@@ -11,20 +11,12 @@ public class ScheduleDto {
 	private String title;
 	private String description;
 	private String status;
-	private LocalDateTime createdAt;
-	private String creator;
-	private Integer votesYes = 0;
-	private Integer votesNo = 0;
 	
 	public ScheduleDto(Schedule schedule) {
 		this.id = schedule.getId();
 		this.title = schedule.getTitle();
 		this.description = schedule.getDescription();
 		this.status = schedule.getStatus().toString();
-		this.createdAt = schedule.getCreatedAt();
-		this.creator = schedule.getCreator().getName();
-		this.votesYes = schedule.getVotesYes();
-		this.votesNo = schedule.getVotesNo();
 	}
 
 	public Long getId() {
@@ -43,22 +35,6 @@ public class ScheduleDto {
 		return status;
 	}
 	
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-	
-	public String getCreator() {
-		return creator;
-	}
-	
-	public Integer getVotesYes() {
-		return votesYes;
-	}
-	
-	public Integer getVotesNo() {
-		return votesNo;
-	}
-
 	public static List<ScheduleDto> converter(List<Schedule> schedule) {
 		return schedule.stream().map(ScheduleDto::new).collect(Collectors.toList());
 	}

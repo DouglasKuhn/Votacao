@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import br.com.compasso.votacao.enumeration.EnumSessionStatus;
-import br.com.compasso.votacao.enumeration.EnumVote;
 
 @Entity
 public class Session {
@@ -26,7 +25,7 @@ public class Session {
 	@OneToOne
 	private Schedule schedule;
 	@Enumerated(EnumType.STRING)
-	private EnumSessionStatus status = EnumSessionStatus.ABERTA;
+	private EnumSessionStatus status = EnumSessionStatus.OPEN;
 	private Integer time;
 	@OneToMany
 	private List<Vote> votes;
