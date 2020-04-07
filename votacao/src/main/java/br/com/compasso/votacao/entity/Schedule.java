@@ -1,6 +1,8 @@
 package br.com.compasso.votacao.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import br.com.compasso.votacao.enumeration.EnumStatusSchedule;
@@ -22,19 +25,19 @@ public class Schedule {
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private EnumStatusSchedule status;
-	private LocalDateTime createdAt;
+	private LocalDateTime createdAt = LocalDateTime.now();
 	@OneToOne
 	private User creator;
 	private Integer votesYes = 0;
 	private Integer votesNo = 0;
+	@OneToMany
+	private Set<Vote> votes = new HashSet<Vote>();
 	
 	public Schedule() {}
 
 	public Schedule(String title, String description) {
 		this.title = title;
 		this.description = description;
-		this.createdAt = LocalDateTime.now();
-		this.status = EnumStatusSchedule.VOTING;
 	}
 
 	public Long getId() {
@@ -99,6 +102,14 @@ public class Schedule {
 	
 	public void setVotesNo(Integer votesNo) {
 		this.votesNo = votesNo;
+	}
+	
+	public Set<Vote> getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Set<Vote> votes) {
+		this.votes = votes;
 	}
 	
 }

@@ -28,7 +28,7 @@ public class ScheduleForm {
 		this.description = description;
 	}
 
-	public Schedule converter() {
+	public Schedule criaSchedule() {
 		return new Schedule(title, description);
 	}
 	

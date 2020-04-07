@@ -9,6 +9,10 @@ public class FormErrorDto {
 		this.field = field;
 		this.error = error;
 	}
+	
+	public FormErrorDto(String error) {
+		this.error = error;
+	}
 
 	public String getField() {
 		return field;

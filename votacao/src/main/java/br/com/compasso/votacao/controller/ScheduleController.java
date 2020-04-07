@@ -20,7 +20,6 @@ import br.com.compasso.votacao.controller.dto.DetailedScheduleDto;
 import br.com.compasso.votacao.controller.dto.ScheduleDto;
 import br.com.compasso.votacao.controller.form.ScheduleForm;
 import br.com.compasso.votacao.entity.Schedule;
-import br.com.compasso.votacao.repository.ScheduleRepository;
 import br.com.compasso.votacao.service.ScheduleService;
 
 @RestController
@@ -28,22 +27,19 @@ import br.com.compasso.votacao.service.ScheduleService;
 public class ScheduleController {
 	
 	@Autowired
-	private ScheduleRepository scheduleRepository;
-	
-	@Autowired
-	private ScheduleService service;
+	private ScheduleService scheduleService;
 	
 	@GetMapping
 	public List<ScheduleDto> list() {
-		List<Schedule> schedules = scheduleRepository.findAll();
+		List<Schedule> schedules = scheduleService.findAll();
 		return ScheduleDto.converter(schedules);
 	}
 	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<ScheduleDto> register(@RequestBody @Valid ScheduleForm form, UriComponentsBuilder uriBuilder) {
-		Schedule schedule = form.converter();
-		scheduleRepository.save(schedule);
+		Schedule schedule = form.criaSchedule();
+		scheduleService.save(schedule);
 		
 		URI uri = uriBuilder.path("/schedule/{id}").buildAndExpand(schedule.getId()).toUri();
 		return ResponseEntity.created(uri).body(new ScheduleDto(schedule));
@@ -51,7 +47,7 @@ public class ScheduleController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<DetailedScheduleDto> detail(@PathVariable Long id) {
-		Schedule schedule = service.getOne(id);
+		Schedule schedule = scheduleService.getOne(id);
 		if (schedule != null) {
 			return ResponseEntity.ok(new DetailedScheduleDto(schedule));
 		}

@@ -33,4 +33,10 @@ public class HandlerErrorValidation {
 		
 		return dto;
 	}
+	
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(IllegalArgumentException.class)
+	public FormSessionErrorDto handler(IllegalArgumentException exception) {
+		return new FormSessionErrorDto(exception.getLocalizedMessage());
+	}
 }

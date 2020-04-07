@@ -1,5 +1,6 @@
 package br.com.compasso.votacao.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +22,13 @@ public class ScheduleService {
 		}
 		return null;
 	}
+
+	public List<Schedule> findAll() {
+		return scheduleRepository.findAll();
+	}
+	
+	public void save(Schedule schedule) {
+		scheduleRepository.save(schedule);
+	}
+
 }
