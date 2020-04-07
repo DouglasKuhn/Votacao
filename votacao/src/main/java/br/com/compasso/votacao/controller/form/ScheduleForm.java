@@ -11,7 +11,6 @@ public class ScheduleForm {
 	private String title;
 	@NotNull @NotEmpty
 	private String description;
-//	private User creator;
 	
 	public String getTitle() {
 		return title;

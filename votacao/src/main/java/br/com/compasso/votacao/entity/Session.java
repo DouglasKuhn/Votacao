@@ -1,7 +1,8 @@
 package br.com.compasso.votacao.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,7 +29,7 @@ public class Session {
 	private EnumSessionStatus status = EnumSessionStatus.OPEN;
 	private Integer time;
 	@OneToMany
-	private List<Vote> votes;
+	private Set<Vote> votes = new HashSet<Vote>();
 	
 	
 	public Long getId() {
@@ -78,15 +79,13 @@ public class Session {
 	public void setTime(Integer time) {
 		this.time = time;
 	}
-	
-	public List<Vote> getVotes() {
+
+	public Set<Vote> getVotes() {
 		return votes;
 	}
-	
-	public void setVotes(List<Vote> votes) {
+
+	public void setVotes(Set<Vote> votes) {
 		this.votes = votes;
 	}
 	
-	
-
 }

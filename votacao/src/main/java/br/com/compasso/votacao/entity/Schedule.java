@@ -33,8 +33,8 @@ public class Schedule {
 	public Schedule(String title, String description) {
 		this.title = title;
 		this.description = description;
-		this.status = EnumStatusSchedule.OK;
 		this.createdAt = LocalDateTime.now();
+		this.status = EnumStatusSchedule.VOTING;
 	}
 
 	public Long getId() {
@@ -100,7 +100,5 @@ public class Schedule {
 	public void setVotesNo(Integer votesNo) {
 		this.votesNo = votesNo;
 	}
-	
-	
 	
 }

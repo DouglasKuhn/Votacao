@@ -1,10 +1,8 @@
 package br.com.compasso.votacao.controller.form;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import br.com.compasso.votacao.entity.Schedule;
-import br.com.compasso.votacao.enumeration.EnumStatusSchedule;
 import br.com.compasso.votacao.repository.ScheduleRepository;
 
 public class ScheduleUpdateForm {
