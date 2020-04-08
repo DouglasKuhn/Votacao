@@ -8,7 +8,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 import br.com.compasso.votacao.enumeration.EnumSessionStatus;
 
@@ -20,16 +19,13 @@ public class Session {
 	private Long id;
 	private LocalDateTime begin = LocalDateTime.now();
 	private LocalDateTime end;
-	@OneToOne
-	private Schedule schedule;
 	@Enumerated(EnumType.STRING)
 	private EnumSessionStatus status = EnumSessionStatus.VOTING;
 	private int time;
 	
 	public Session() {}
 	
-	public Session(Schedule schedule, int time) {
-		this.schedule = schedule;
+	public Session(int time) {
 		this.time = time;
 		this.end = begin.plusMinutes(time);
 	}
@@ -56,14 +52,6 @@ public class Session {
 	
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
-	}
-	
-	public Schedule getSchedule() {
-		return schedule;
-	}
-	
-	public void setSchedule(Schedule schedule) {
-		this.schedule = schedule;
 	}
 	
 	public EnumSessionStatus getStatus() {

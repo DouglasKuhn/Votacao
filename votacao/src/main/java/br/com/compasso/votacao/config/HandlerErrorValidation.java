@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 @RestControllerAdvice
 public class HandlerErrorValidation {
 
@@ -39,4 +41,11 @@ public class HandlerErrorValidation {
 	public FormSessionErrorDto handler(IllegalArgumentException exception) {
 		return new FormSessionErrorDto(exception.getLocalizedMessage());
 	}
+	
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(InvalidFormatException.class)
+	public FormSessionErrorDto handler(InvalidFormatException exception) {
+		return new FormSessionErrorDto(exception.getOriginalMessage());
+	}
+	
 }

@@ -23,7 +23,7 @@ public class ScheduleService {
 		return null;
 	}
 
-	public List<Schedule> findAll() {
+	public List<Schedule> getAll() {
 		return scheduleRepository.findAll();
 	}
 	

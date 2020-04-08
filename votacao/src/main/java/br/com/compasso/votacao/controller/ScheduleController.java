@@ -31,7 +31,7 @@ public class ScheduleController {
 	
 	@GetMapping
 	public List<ScheduleDto> list() {
-		List<Schedule> schedules = scheduleService.findAll();
+		List<Schedule> schedules = scheduleService.getAll();
 		return ScheduleDto.converter(schedules);
 	}
 	

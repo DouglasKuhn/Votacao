@@ -28,6 +28,8 @@ public class Schedule {
 	private LocalDateTime createdAt = LocalDateTime.now();
 	@OneToOne
 	private User creator;
+	@OneToOne
+	private Session session;
 	private Integer votesYes = 0;
 	private Integer votesNo = 0;
 	@OneToMany
@@ -88,6 +90,14 @@ public class Schedule {
 		this.creator = creator;
 	}
 	
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
 	public Integer getVotesYes() {
 		return votesYes;
 	}

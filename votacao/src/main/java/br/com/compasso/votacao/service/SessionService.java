@@ -37,8 +37,8 @@ public class SessionService {
 		sessionRepository.save(session);
 	}
 
-	public Session criaSession(@Valid SessionForm form) {
-		return new Session(scheduleService.getOne(form.getScheduleId()), form.getTimeInMinutes());
+	public Session createSession(@Valid SessionForm form) {
+		return new Session(form.getTimeInMinutes());
 	}
 
 }

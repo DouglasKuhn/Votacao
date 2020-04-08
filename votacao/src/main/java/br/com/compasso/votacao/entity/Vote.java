@@ -20,12 +20,20 @@ public class Vote {
 	private Long id;
 	private LocalDateTime createdAt = LocalDateTime.now();
 	@OneToOne
-	private User associate;
+	private User user;
 	@ManyToOne
 	private Session session;
 	@Enumerated(EnumType.STRING)
 	private EnumVote vote;
 	
+	public Vote() {}
+
+	public Vote(User user, EnumVote vote, Session session) {
+		this.user = user;
+		this.session = session;
+		this.vote = vote;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -42,12 +50,12 @@ public class Vote {
 		this.createdAt = createdAt;
 	}
 	
-	public User getAssociate() {
-		return associate;
+	public User getUser() {
+		return user;
 	}
 	
-	public void setAssociate(User associate) {
-		this.associate = associate;
+	public void setUser(User associate) {
+		this.user = associate;
 	}
 	
 	public Session getSession() {

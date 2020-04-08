@@ -11,7 +11,9 @@ public class ScheduleForm {
 	private String title;
 	@NotNull @NotEmpty
 	private String description;
+	private int timeInMinutes;
 	
+
 	public String getTitle() {
 		return title;
 	}
@@ -28,6 +30,17 @@ public class ScheduleForm {
 		this.description = description;
 	}
 
+	public int getTimeInMinutes() {
+		if (timeInMinutes < 1) {
+			return 1;
+		}
+		return timeInMinutes;
+	}
+	
+	public void setTimeInMinutes(int timeInMinutes) {
+		this.timeInMinutes = timeInMinutes;
+	}
+	
 	public Schedule criaSchedule() {
 		return new Schedule(title, description);
 	}

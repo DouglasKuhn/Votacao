@@ -22,29 +22,29 @@ import br.com.compasso.votacao.controller.form.SessionForm;
 import br.com.compasso.votacao.entity.Session;
 import br.com.compasso.votacao.service.SessionService;
 
-@RestController
-@RequestMapping("/session")
+//@RestController
+//@RequestMapping("/session")
 public class SessionController {
-	
+
 	@Autowired
 	private SessionService sessionService;
-	
+
 	@GetMapping
 	public List<SessionDto> list() {
 		List<Session> schedules = sessionService.findAll();
 		return SessionDto.converter(schedules);
 	}
-	
+
 	@PostMapping
 	@Transactional
 	public ResponseEntity<SessionDto> register(@RequestBody @Valid SessionForm form, UriComponentsBuilder uriBuilder) {
-		Session session = sessionService.criaSession(form);
+		Session session = sessionService.createSession(form);
 		sessionService.save(session);
-		
+
 		URI uri = uriBuilder.path("/session/{id}").buildAndExpand(session.getId()).toUri();
 		return ResponseEntity.created(uri).body(new SessionDto(session));
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<DetailedSessionDto> detail(@PathVariable Long id) {
 		Session session = sessionService.getOne(id);

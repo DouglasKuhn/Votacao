@@ -7,28 +7,36 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.compasso.votacao.controller.dto.SessionDto;
 import br.com.compasso.votacao.controller.dto.VoteDto;
 import br.com.compasso.votacao.controller.form.VoteForm;
 import br.com.compasso.votacao.entity.Vote;
 import br.com.compasso.votacao.service.VoteService;
 
+@RestController
+@RequestMapping("/session")
 public class VoteController {
 	
 	@Autowired
 	private VoteService voteService;
 
-	@PostMapping
+	@PostMapping("/{id}/vote")
 	@Transactional
-	public ResponseEntity<VoteDto> vote(@RequestBody @Valid VoteForm form, UriComponentsBuilder uriBuilder) {
-		Vote vote = voteService.criaSession(form);
-		voteService.save(vote);
+	public ResponseEntity<VoteDto> vote(@RequestBody @Valid VoteForm form, UriComponentsBuilder uriBuilder, @PathVariable Long id) {
+		Vote vote = voteService.createVote(form, id);
+		if (voteService.checkIfSessionIsOpen(vote)) {
+			voteService.save(vote);
+			
+			URI uri = uriBuilder.path("/session/{id}/vote").buildAndExpand(vote.getId()).toUri();
+			return ResponseEntity.created(uri).body(new VoteDto(vote));
+		}
 		
-		URI uri = uriBuilder.path("/session/{id}").buildAndExpand(vote.getId()).toUri();
-		return ResponseEntity.created(uri).body(new VoteDto(vote));
+		return null;
 	}
 }
