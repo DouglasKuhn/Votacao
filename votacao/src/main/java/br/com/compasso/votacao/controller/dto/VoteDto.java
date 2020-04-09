@@ -3,11 +3,11 @@ package br.com.compasso.votacao.controller.dto;
 import br.com.compasso.votacao.entity.Vote;
 
 public class VoteDto {
-	
+
 	private Long userId;
 	private Long sessionId;
 	private String vote;
-	
+
 	public VoteDto(Vote vote) {
 		this.userId = vote.getUser().getId();
 		this.sessionId = vote.getSession().getId();
@@ -25,5 +25,5 @@ public class VoteDto {
 	public String getVote() {
 		return vote;
 	}
-	
+
 }

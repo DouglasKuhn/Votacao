@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
+import br.com.compasso.votacao.exceptions.SessionFinishedException;
+
 @RestControllerAdvice
 public class HandlerErrorValidation {
 
@@ -46,6 +48,12 @@ public class HandlerErrorValidation {
 	@ExceptionHandler(InvalidFormatException.class)
 	public FormSessionErrorDto handler(InvalidFormatException exception) {
 		return new FormSessionErrorDto(exception.getOriginalMessage());
+	}
+	
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(SessionFinishedException.class)
+	public FormSessionErrorDto genericHandler(RuntimeException exception) {
+		return new FormSessionErrorDto(exception.getMessage());
 	}
 	
 }

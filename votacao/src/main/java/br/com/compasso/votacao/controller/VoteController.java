@@ -17,26 +17,27 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.compasso.votacao.controller.dto.VoteDto;
 import br.com.compasso.votacao.controller.form.VoteForm;
 import br.com.compasso.votacao.entity.Vote;
+import br.com.compasso.votacao.exceptions.SessionFinishedException;
 import br.com.compasso.votacao.service.VoteService;
 
 @RestController
-@RequestMapping("/session")
+@RequestMapping("/schedules")
 public class VoteController {
-	
+
 	@Autowired
 	private VoteService voteService;
 
 	@PostMapping("/{id}/vote")
 	@Transactional
-	public ResponseEntity<VoteDto> vote(@RequestBody @Valid VoteForm form, UriComponentsBuilder uriBuilder, @PathVariable Long id) {
+	public ResponseEntity<VoteDto> vote(@RequestBody @Valid VoteForm form, UriComponentsBuilder uriBuilder,
+			@PathVariable Long id) {
 		Vote vote = voteService.createVote(form, id);
-		if (voteService.checkIfSessionIsOpen(vote)) {
+		if (voteService.voteValidate(vote)) {
 			voteService.save(vote);
-			
-			URI uri = uriBuilder.path("/session/{id}/vote").buildAndExpand(vote.getId()).toUri();
+
+			URI uri = uriBuilder.path("/schedules/{id}/vote").buildAndExpand(vote.getId()).toUri();
 			return ResponseEntity.created(uri).body(new VoteDto(vote));
-		}
-		
-		return null;
+		} else
+			throw new SessionFinishedException("Session is already finished");
 	}
 }

@@ -24,20 +24,17 @@ public class Schedule {
 	private String title;
 	private String description;
 	@Enumerated(EnumType.STRING)
-	private EnumStatusSchedule status;
+	private EnumStatusSchedule status = EnumStatusSchedule.VOTING;
 	private LocalDateTime createdAt = LocalDateTime.now();
 	@OneToOne
 	private User creator;
-	@OneToOne
-	private Session session;
 	private Integer votesYes = 0;
 	private Integer votesNo = 0;
-	@OneToMany
-	private Set<Vote> votes = new HashSet<Vote>();
 	
 	public Schedule() {}
 
-	public Schedule(String title, String description) {
+	public Schedule(User user, String title, String description) {
+		this.creator = user;
 		this.title = title;
 		this.description = description;
 	}
@@ -90,14 +87,6 @@ public class Schedule {
 		this.creator = creator;
 	}
 	
-	public Session getSession() {
-		return session;
-	}
-
-	public void setSession(Session session) {
-		this.session = session;
-	}
-
 	public Integer getVotesYes() {
 		return votesYes;
 	}
@@ -112,14 +101,6 @@ public class Schedule {
 	
 	public void setVotesNo(Integer votesNo) {
 		this.votesNo = votesNo;
-	}
-	
-	public Set<Vote> getVotes() {
-		return votes;
-	}
-
-	public void setVotes(Set<Vote> votes) {
-		this.votes = votes;
 	}
 	
 }

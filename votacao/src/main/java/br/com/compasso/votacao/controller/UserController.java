@@ -23,22 +23,22 @@ import br.com.compasso.votacao.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping
 	public List<UserDto> list() {
 		List<User> users = userService.getAll();
 		return UserDto.converter(users);
 	}
-	
+
 	@PostMapping
 	@Transactional
 	public ResponseEntity<UserDto> register(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder) {
 		User user = form.criaUser();
 		userService.save(user);
-		
+
 		URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
 		return ResponseEntity.created(uri).body(new UserDto(user));
 	}

@@ -19,7 +19,7 @@ public class DetailedScheduleDto {
 		this.id = schedule.getId();
 		this.title = schedule.getTitle();
 		this.description = schedule.getDescription();
-		this.status = schedule.getStatus().toString();
+		this.status = schedule.getStatus().name();
 		this.createdAt = schedule.getCreatedAt();
 		this.creator = schedule.getCreator().getName();
 		this.votesYes = schedule.getVotesYes();

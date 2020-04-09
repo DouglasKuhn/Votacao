@@ -7,39 +7,45 @@ import java.util.stream.Collectors;
 import br.com.compasso.votacao.entity.Session;
 
 public class SessionDto {
-	
+
 	private Long id;
-	private String title;
-	private String description;
+	private Long scheduleId;
+	private int timeInMinutes;
+	private LocalDateTime begin;
+	private LocalDateTime end;
 	private String status;
-	private LocalDateTime begin = LocalDateTime.now();
 
 	public SessionDto(Session session) {
 		this.id = session.getId();
-		this.title = session.getSchedule().getTitle();
-		this.description = session.getSchedule().getDescription();
-		this.status = session.getStatus().name();
+		this.scheduleId = session.getSchedule().getId();
+		this.timeInMinutes = session.getTime();
 		this.begin = session.getBegin();
+		this.end = session.getEnd();
+		this.status = session.getStatus().name();
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public String getTitle() {
-		return title;
+	public Long getScheduleId() {
+		return scheduleId;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public String getStatus() {
-		return status;
+	public int getTimeInMinutes() {
+		return timeInMinutes;
 	}
 
 	public LocalDateTime getBegin() {
 		return begin;
+	}
+
+	public LocalDateTime getEnd() {
+		return end;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 
 	public static List<SessionDto> converter(List<Session> session) {

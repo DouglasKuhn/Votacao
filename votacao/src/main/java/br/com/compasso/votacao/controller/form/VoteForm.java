@@ -9,11 +9,11 @@ public class VoteForm {
 	private Long userId;
 	@NotNull
 	private EnumVote vote;
-	
+
 	public Long getUserId() {
 		return userId;
 	}
-	
+
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
@@ -25,8 +25,5 @@ public class VoteForm {
 	public void setVote(EnumVote vote) {
 		this.vote = vote;
 	}
-	
-	
-	
 
 }

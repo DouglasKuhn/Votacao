@@ -18,16 +18,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.compasso.votacao.controller.dto.DetailedScheduleDto;
 import br.com.compasso.votacao.controller.dto.ScheduleDto;
+import br.com.compasso.votacao.controller.dto.SessionDto;
 import br.com.compasso.votacao.controller.form.ScheduleForm;
 import br.com.compasso.votacao.entity.Schedule;
+import br.com.compasso.votacao.entity.Session;
 import br.com.compasso.votacao.service.ScheduleService;
+import br.com.compasso.votacao.service.SessionService;
 
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping("/schedules")
 public class ScheduleController {
 	
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
+	private SessionService sessionService;
 	
 	@GetMapping
 	public List<ScheduleDto> list() {
@@ -38,8 +44,10 @@ public class ScheduleController {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<ScheduleDto> register(@RequestBody @Valid ScheduleForm form, UriComponentsBuilder uriBuilder) {
-		Schedule schedule = form.criaSchedule();
+		Schedule schedule = scheduleService.createSchedule(form);
 		scheduleService.save(schedule);
+		scheduleService.createSession(schedule, form.getTimeInMinutes());
+		
 		
 		URI uri = uriBuilder.path("/schedule/{id}").buildAndExpand(schedule.getId()).toUri();
 		return ResponseEntity.created(uri).body(new ScheduleDto(schedule));
@@ -52,5 +60,11 @@ public class ScheduleController {
 			return ResponseEntity.ok(new DetailedScheduleDto(schedule));
 		}
 		return ResponseEntity.notFound().build();
+	}
+	
+	@GetMapping("/sessions")
+	public List<SessionDto> essionList() {
+		List<Session> schedules = sessionService.findAll();
+		return SessionDto.converter(schedules);
 	}
 }
