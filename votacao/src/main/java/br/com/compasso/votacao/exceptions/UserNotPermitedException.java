@@ -1,11 +1,10 @@
 package br.com.compasso.votacao.exceptions;
 
-public class SessionFinishedException extends RuntimeException {
+public class UserNotPermitedException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public SessionFinishedException(String message) {
+	public UserNotPermitedException(String message) {
 		super(message);
 	}
-
 }

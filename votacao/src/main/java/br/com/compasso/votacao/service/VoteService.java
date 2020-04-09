@@ -29,7 +29,7 @@ public class VoteService {
 
 	public void save(Vote vote) {
 		voteRepository.save(vote);
-		
+
 	}
 
 	public boolean checkIfSessionIsOpen(Vote vote) {
@@ -40,10 +40,11 @@ public class VoteService {
 	}
 
 	public boolean voteValidate(Vote vote) {
-		if (checkIfSessionIsOpen(vote) && sessionService.voteSaveValidate(vote)) {
+		if (checkIfSessionIsOpen(vote) && vote.getSession().addVote(vote)) {
+			save(vote);
+			sessionService.save(vote.getSession());
 			return true;
 		}
 		return false;
 	}
-
 }

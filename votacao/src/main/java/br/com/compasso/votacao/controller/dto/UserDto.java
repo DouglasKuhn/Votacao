@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import br.com.compasso.votacao.entity.User;
 
 public class UserDto {
-	
+
 	private Long id;
 	private String name;
 	private String email;

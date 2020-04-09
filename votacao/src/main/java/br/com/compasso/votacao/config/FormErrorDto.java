@@ -4,12 +4,12 @@ public class FormErrorDto {
 
 	private String field;
 	private String error;
-	
+
 	public FormErrorDto(String field, String error) {
 		this.field = field;
 		this.error = error;
 	}
-	
+
 	public FormErrorDto(String error) {
 		this.error = error;
 	}
@@ -21,5 +21,5 @@ public class FormErrorDto {
 	public String getError() {
 		return error;
 	}
-	
+
 }

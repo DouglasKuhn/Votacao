@@ -10,10 +10,10 @@ import br.com.compasso.votacao.repository.UserRepository;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public User getOne(Long id) {
 		return userRepository.getOne(id);
 	}

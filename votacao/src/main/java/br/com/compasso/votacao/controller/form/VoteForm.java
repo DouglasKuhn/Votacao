@@ -5,6 +5,7 @@ import com.sun.istack.NotNull;
 import br.com.compasso.votacao.enumeration.EnumVote;
 
 public class VoteForm {
+
 	@NotNull
 	private Long userId;
 	@NotNull

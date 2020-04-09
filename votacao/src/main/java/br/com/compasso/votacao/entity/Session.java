@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import br.com.compasso.votacao.enumeration.EnumSessionStatus;
+import br.com.compasso.votacao.enumeration.EnumVote;
+import br.com.compasso.votacao.exceptions.UserNotPermitedException;
 
 @Entity
 public class Session {
@@ -31,7 +33,8 @@ public class Session {
 	@OneToMany
 	private Set<Vote> votes = new HashSet<Vote>();
 
-	public Session() {}
+	public Session() {
+	}
 
 	public Session(Schedule schedule, int timeInMinutes) {
 		this.schedule = schedule;
@@ -86,13 +89,29 @@ public class Session {
 	public void setTime(int time) {
 		this.time = time;
 	}
-	
+
 	public Set<Vote> getVotes() {
 		return votes;
 	}
 
 	public void setVotes(Set<Vote> votes) {
 		this.votes = votes;
+	}
+
+	public boolean addVote(Vote vote) {
+		if (votes.add(vote)) {
+			accountVote(vote);
+			return true;
+		} else
+			throw new UserNotPermitedException("This user already voted or not permited");
+	}
+
+	private void accountVote(Vote vote) {
+		if (vote.getVote().equals(EnumVote.YES))
+			vote.getSession().getSchedule().accountYesVote();
+		else
+			vote.getSession().getSchedule().accountNoVote();
+
 	}
 
 }

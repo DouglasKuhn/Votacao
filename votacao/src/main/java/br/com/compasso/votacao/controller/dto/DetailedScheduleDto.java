@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import br.com.compasso.votacao.entity.Schedule;
 
 public class DetailedScheduleDto {
-	
+
 	private Long id;
 	private String title;
 	private String description;
@@ -14,7 +14,7 @@ public class DetailedScheduleDto {
 	private String creator;
 	private Integer votesYes;
 	private Integer votesNo;
-	
+
 	public DetailedScheduleDto(Schedule schedule) {
 		this.id = schedule.getId();
 		this.title = schedule.getTitle();
@@ -57,6 +57,5 @@ public class DetailedScheduleDto {
 	public Integer getVotesNo() {
 		return votesNo;
 	}
-	
-	
+
 }

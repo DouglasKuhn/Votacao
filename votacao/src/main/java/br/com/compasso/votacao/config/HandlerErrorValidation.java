@@ -16,44 +16,45 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import br.com.compasso.votacao.exceptions.SessionFinishedException;
+import br.com.compasso.votacao.exceptions.UserNotPermitedException;
 
 @RestControllerAdvice
 public class HandlerErrorValidation {
 
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public List<FormErrorDto> handler(MethodArgumentNotValidException exception) {
 		List<FormErrorDto> dto = new ArrayList<>();
-		
+
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		fieldErrors.forEach(e -> {
 			String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
 			FormErrorDto error = new FormErrorDto(e.getField(), message);
 			dto.add(error);
 		});
-		
+
 		return dto;
 	}
-	
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(IllegalArgumentException.class)
 	public FormSessionErrorDto handler(IllegalArgumentException exception) {
 		return new FormSessionErrorDto(exception.getLocalizedMessage());
 	}
-	
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(InvalidFormatException.class)
 	public FormSessionErrorDto handler(InvalidFormatException exception) {
 		return new FormSessionErrorDto(exception.getOriginalMessage());
 	}
-	
+
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(SessionFinishedException.class)
+	@ExceptionHandler({ SessionFinishedException.class, UserNotPermitedException.class })
 	public FormSessionErrorDto genericHandler(RuntimeException exception) {
 		return new FormSessionErrorDto(exception.getMessage());
 	}
-	
+
 }

@@ -5,11 +5,13 @@ import javax.validation.constraints.NotNull;
 
 public class ScheduleForm {
 
-	@NotNull @NotEmpty
+	@NotNull
 	private Long userId;
-	@NotNull @NotEmpty
+	@NotNull
+	@NotEmpty
 	private String title;
-	@NotNull @NotEmpty
+	@NotNull
+	@NotEmpty
 	private String description;
 	private int timeInMinutes;
 
@@ -24,15 +26,15 @@ public class ScheduleForm {
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -43,9 +45,9 @@ public class ScheduleForm {
 		}
 		return timeInMinutes;
 	}
-	
+
 	public void setTimeInMinutes(int timeInMinutes) {
 		this.timeInMinutes = timeInMinutes;
 	}
-	
+
 }

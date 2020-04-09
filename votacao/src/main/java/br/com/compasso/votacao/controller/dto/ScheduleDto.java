@@ -9,7 +9,7 @@ public class ScheduleDto {
 	private Long id;
 	private String title;
 	private String description;
-	
+
 	public ScheduleDto(Schedule schedule) {
 		this.id = schedule.getId();
 		this.title = schedule.getTitle();
@@ -19,17 +19,17 @@ public class ScheduleDto {
 	public Long getId() {
 		return id;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public static List<ScheduleDto> converter(List<Schedule> schedule) {
 		return schedule.stream().map(ScheduleDto::new).collect(Collectors.toList());
 	}
-	
+
 }

@@ -7,11 +7,13 @@ import com.sun.istack.NotNull;
 import br.com.compasso.votacao.entity.User;
 
 public class UserForm {
+
 	@NotNull
 	private String name;
 	@NotNull
 	private String email;
-	@NotNull @Length(min = 5)
+	@NotNull
+	@Length(min = 5)
 	private String password;
 
 	public String getName() {

@@ -33,7 +33,6 @@ public class VoteController {
 			@PathVariable Long id) {
 		Vote vote = voteService.createVote(form, id);
 		if (voteService.voteValidate(vote)) {
-			voteService.save(vote);
 
 			URI uri = uriBuilder.path("/schedules/{id}/vote").buildAndExpand(vote.getId()).toUri();
 			return ResponseEntity.created(uri).body(new VoteDto(vote));

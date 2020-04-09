@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.compasso.votacao.entity.Session;
 
-public interface SessionRepository extends JpaRepository<Session, Long>{
+public interface SessionRepository extends JpaRepository<Session, Long> {
 
 	Session findByScheduleId(Long id);
-	
+
 }

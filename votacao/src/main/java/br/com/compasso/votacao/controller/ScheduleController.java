@@ -28,31 +28,31 @@ import br.com.compasso.votacao.service.SessionService;
 @RestController
 @RequestMapping("/schedules")
 public class ScheduleController {
-	
+
 	@Autowired
 	private ScheduleService scheduleService;
-	
+
 	@Autowired
 	private SessionService sessionService;
-	
+
 	@GetMapping
 	public List<ScheduleDto> list() {
 		List<Schedule> schedules = scheduleService.getAll();
 		return ScheduleDto.converter(schedules);
 	}
-	
+
 	@PostMapping
 	@Transactional
-	public ResponseEntity<ScheduleDto> register(@RequestBody @Valid ScheduleForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<ScheduleDto> register(@RequestBody @Valid ScheduleForm form,
+			UriComponentsBuilder uriBuilder) {
 		Schedule schedule = scheduleService.createSchedule(form);
 		scheduleService.save(schedule);
 		scheduleService.createSession(schedule, form.getTimeInMinutes());
-		
-		
+
 		URI uri = uriBuilder.path("/schedule/{id}").buildAndExpand(schedule.getId()).toUri();
 		return ResponseEntity.created(uri).body(new ScheduleDto(schedule));
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<DetailedScheduleDto> detail(@PathVariable Long id) {
 		Schedule schedule = scheduleService.getOne(id);
@@ -61,7 +61,7 @@ public class ScheduleController {
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@GetMapping("/sessions")
 	public List<SessionDto> essionList() {
 		List<Session> schedules = sessionService.findAll();
