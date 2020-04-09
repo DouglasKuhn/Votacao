@@ -55,7 +55,7 @@ public class ScheduleService {
 		save(getScheduleFinalStatus(session.getSchedule()));
 	}
 
-	private Schedule getScheduleFinalStatus(Schedule schedule) {
+	public Schedule getScheduleFinalStatus(Schedule schedule) {
 		if (schedule.getVotesYes() > schedule.getVotesNo())
 			schedule.setStatus(EnumStatusSchedule.APROVED);
 		else
