@@ -1,8 +1,8 @@
 package br.com.compasso.votacao.controller.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
 
 import br.com.compasso.votacao.entity.Session;
 
@@ -48,8 +48,8 @@ public class SessionDto {
 		return status;
 	}
 
-	public static List<SessionDto> converter(List<Session> session) {
-		return session.stream().map(SessionDto::new).collect(Collectors.toList());
+	public static Page<SessionDto> converter(Page<Session> session) {
+		return session.map(SessionDto::new);
 	}
 
 }

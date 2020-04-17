@@ -1,7 +1,6 @@
 package br.com.compasso.votacao.controller.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
 
 import br.com.compasso.votacao.entity.Schedule;
 
@@ -28,8 +27,8 @@ public class ScheduleDto {
 		return description;
 	}
 
-	public static List<ScheduleDto> converter(List<Schedule> schedule) {
-		return schedule.stream().map(ScheduleDto::new).collect(Collectors.toList());
+	public static Page<ScheduleDto> converter(Page<Schedule> schedule) {
+		return schedule.map(ScheduleDto::new);
 	}
 
 }

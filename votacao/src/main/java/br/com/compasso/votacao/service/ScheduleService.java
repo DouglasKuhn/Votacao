@@ -1,11 +1,12 @@
 package br.com.compasso.votacao.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.compasso.votacao.controller.form.ScheduleForm;
@@ -34,8 +35,8 @@ public class ScheduleService {
 		return null;
 	}
 
-	public List<Schedule> getAll() {
-		return scheduleRepository.findAll();
+	public Page<Schedule> getAll(Pageable pageable) {
+		return scheduleRepository.findAll(pageable);
 	}
 
 	public void save(Schedule schedule) {
@@ -61,6 +62,10 @@ public class ScheduleService {
 		else
 			schedule.setStatus(EnumStatusSchedule.DENIED);
 		return schedule;
+	}
+
+	public Page<Schedule> findByTitle(String scheduleTitle, Pageable pageable) {
+		return scheduleRepository.findByTitle(scheduleTitle, pageable);
 	}
 
 }

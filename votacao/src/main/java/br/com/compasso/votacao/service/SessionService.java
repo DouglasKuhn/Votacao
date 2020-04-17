@@ -1,10 +1,11 @@
 package br.com.compasso.votacao.service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.compasso.votacao.entity.Schedule;
@@ -29,8 +30,8 @@ public class SessionService {
 		return null;
 	}
 
-	public List<Session> findAll() {
-		return sessionRepository.findAll();
+	public Page<Session> findAll(Pageable pageable) {
+		return sessionRepository.findAll(pageable);
 	}
 
 	public void save(Session session) {
@@ -46,7 +47,7 @@ public class SessionService {
 	}
 
 	public void checkForEndedSessions() {
-		findAll().forEach(session -> {
+		sessionRepository.findAll().forEach(session -> {
 			if (session.getStatus().equals(EnumSessionStatus.VOTING) && LocalDateTime.now().isAfter(session.getEnd())) {
 				session.setStatus(EnumSessionStatus.FINISHED);
 				save(session);
