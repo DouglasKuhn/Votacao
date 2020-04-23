@@ -14,6 +14,19 @@ public class ScheduleForm {
 	@NotEmpty
 	private String description;
 	private int timeInMinutes;
+	
+	
+
+	public ScheduleForm() {
+	}
+
+	public ScheduleForm(@NotNull Long userId, @NotNull @NotEmpty String title, @NotNull @NotEmpty String description,
+			int timeInMinutes) {
+		this.userId = userId;
+		this.title = title;
+		this.description = description;
+		this.timeInMinutes = timeInMinutes;
+	}
 
 	public Long getUserId() {
 		return userId;
