@@ -32,7 +32,7 @@ public class ScheduleForm {
 		return userId;
 	}
 
-	public void setUserIdr(Long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

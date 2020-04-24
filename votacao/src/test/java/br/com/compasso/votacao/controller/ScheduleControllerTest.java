@@ -5,13 +5,13 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 
 import br.com.compasso.votacao.config.security.AuthenticationService;
 import br.com.compasso.votacao.config.security.TokenService;
-import br.com.compasso.votacao.controller.form.LoginForm;
 import br.com.compasso.votacao.controller.form.ScheduleForm;
 import br.com.compasso.votacao.entity.Schedule;
 import br.com.compasso.votacao.entity.User;
@@ -58,31 +57,33 @@ public class ScheduleControllerTest {
 	}
 
 	@Test
-	public void test() throws Exception {
-		Gson gson = new Gson();
-		
-		ScheduleForm scheduleForm = new ScheduleForm(1l, "Titulo do schedule", "Descricao do schedule", 1);
-		
-		User user = new User("Aurelio", "pessoa1@email.com", "123456");
-		Schedule schedule = new Schedule(user, "Titulo da schedule", "descricao da schedule");
-		
-		when(scheduleService.createSchedule(scheduleForm)).thenReturn(schedule);
-		
-		LoginForm loginForm = new LoginForm(user.getEmail(), user.getPassword());
-		
-		UsernamePasswordAuthenticationToken loginData = loginForm.converter();
-		Authentication authentication = authManager.authenticate(loginData);
-		String token = tokenService.generateToken(authentication);
-		System.out.println("--->  " + token); //Aqui ta retornando null
-		
-		mockMvc.perform(MockMvcRequestBuilders.post("/schedules")
-				.header("Bearer", token)
-				.content(gson.toJson(scheduleForm))
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				)
-				.andExpect(MockMvcResultMatchers.status().isBadRequest());
-	}
+    public void test() throws Exception {
+        Gson gson = new Gson();
+       
+        ScheduleForm scheduleForm = new ScheduleForm(1l, "Titulo do schedule", "Descricao do schedule", 1);
+       
+        User user = new User("Aurelio", "pessoa1@email.com", "123456");
+        user.setId(1l);
+        Schedule schedule = new Schedule(user, "Titulo da schedule", "descricao da schedule");
+        //Authentication authentication = authManager.authenticate(loginData);
+        Authentication authentication = Mockito.mock(Authentication.class);
+       
+        when(scheduleService.createSchedule(scheduleForm)).thenReturn(schedule);
+        when(tokenService.generateTokentest(user)).thenCallRealMethod();
+        //when(authentication.getPrincipal()).thenReturn(user);
+       
+       
+        String token = tokenService.generateTokentest(user);
+        System.out.println("--->  " + token);
+       
+        mockMvc.perform(MockMvcRequestBuilders.post("/schedules")
+                .header("Bearer", token)
+                .content(gson.toJson(scheduleForm))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
 	
 //	@Test
 //	public void registerScheduleTest() throws Exception {

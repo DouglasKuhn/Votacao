@@ -28,13 +28,13 @@ public class TokenService {
 	public String generateTokentest(User logged) {
 //		User logged = user;
 		Date now = new Date();
-		Date expirationDate = new Date(now.getTime() + Long.parseLong(expiration));
+		Date expirationDate = new Date(now.getTime() + Long.parseLong("86400000"));
 		return Jwts.builder()
 				.setIssuer("Vote API")
 				.setSubject(logged.getId().toString())
 				.setIssuedAt(now)
 				.setExpiration(expirationDate)
-				.signWith(SignatureAlgorithm.HS256, secret)
+				.signWith(SignatureAlgorithm.HS256, "rm'!@N=Ke!~p8VTA2ZRK~nMDQX5Uvm!m'D&]{@Vr?G;2?XhbC:Qa#9#eMLN\\}x3?JR3.2zr~v)gYF^8\\:8>:XfB:Ww75N/emt9Yj[bQMNCWwW\\J?N,nvH.<2\\.r~w]*e~vgak)X\"v8H`MH/7\"2E`,^k@n<vE-wD3g9JWPy;CrY*.Kd2_D])=><D?YhBaSua5hW%{2]_FVXzb9`8FH^b[X3jzVER&:jw2<=c38=>L/zBq`}C6tT*cCSVC^c]-L}&/")
 				.compact();
 	}
 
