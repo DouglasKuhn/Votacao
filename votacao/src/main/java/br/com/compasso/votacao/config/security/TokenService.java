@@ -24,6 +24,19 @@ public class TokenService {
 	
 	@Value("${votacao.jwt.secret}")
 	private String secret;
+	
+	public String generateTokentest(User logged) {
+//		User logged = user;
+		Date now = new Date();
+		Date expirationDate = new Date(now.getTime() + Long.parseLong(expiration));
+		return Jwts.builder()
+				.setIssuer("Vote API")
+				.setSubject(logged.getId().toString())
+				.setIssuedAt(now)
+				.setExpiration(expirationDate)
+				.signWith(SignatureAlgorithm.HS256, secret)
+				.compact();
+	}
 
 	public String generateToken(Authentication authentication) {
 		User logged = (User) authentication.getPrincipal();
