@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,18 @@ import br.com.compasso.votacao.repository.ScheduleRepository;
 @Service
 public class ScheduleService {
 
-	@Autowired
-	private ScheduleRepository scheduleRepository;
+	private final ScheduleRepository scheduleRepository;
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 
-	@Autowired
-	private SessionService sessionService;
+	private final SessionService sessionService;
+	
+	public ScheduleService(ScheduleRepository scheduleRepository, UserService userService,
+			SessionService sessionService) {
+		this.scheduleRepository = scheduleRepository;
+		this.userService = userService;
+		this.sessionService = sessionService;
+	}
 
 	public Schedule getOne(Long id) {
 		Optional<Schedule> schedule = scheduleRepository.findById(id);

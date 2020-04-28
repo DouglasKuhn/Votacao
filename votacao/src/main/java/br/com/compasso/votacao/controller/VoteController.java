@@ -5,7 +5,6 @@ import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +23,11 @@ import br.com.compasso.votacao.service.VoteService;
 @RequestMapping("/schedules")
 public class VoteController {
 
-	@Autowired
-	private VoteService voteService;
+	private final VoteService voteService;
+
+	public VoteController(VoteService voteService) {
+		this.voteService = voteService;
+	}
 
 	@PostMapping("/{id}/vote")
 	@Transactional

@@ -11,9 +11,12 @@ import br.com.compasso.votacao.repository.SessionRepository;
 @Service
 public class SessionService2 {
 	
-	@Autowired
-	private SessionRepository sessionRepository;
+	private final SessionRepository sessionRepository;
 	
+	public SessionService2(SessionRepository sessionRepository) {
+		this.sessionRepository = sessionRepository;
+	}
+
 	public List<Session> getAll() {
 		return sessionRepository.findAll();
 	}

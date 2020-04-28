@@ -2,7 +2,6 @@ package br.com.compasso.votacao.service;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.compasso.votacao.controller.form.VoteForm;
@@ -13,14 +12,17 @@ import br.com.compasso.votacao.repository.VoteRepository;
 @Service
 public class VoteService {
 
-	@Autowired
-	private VoteRepository voteRepository;
+	private final VoteRepository voteRepository;
 
-	@Autowired
-	private SessionService sessionService;
+	private final SessionService sessionService;
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
+
+	public VoteService(VoteRepository voteRepository, SessionService sessionService, UserService userService) {
+		this.voteRepository = voteRepository;
+		this.sessionService = sessionService;
+		this.userService = userService;
+	}
 
 	public Vote createVote(@Valid VoteForm form, Long scheduleId) {
 		return new Vote(userService.getOne(form.getUserId()), form.getVote(),

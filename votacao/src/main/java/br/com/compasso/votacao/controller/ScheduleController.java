@@ -5,7 +5,6 @@ import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -35,11 +34,14 @@ import br.com.compasso.votacao.service.SessionService;
 @RequestMapping("/schedules")
 public class ScheduleController {
 
-	@Autowired
-	private ScheduleService scheduleService;
+	private final ScheduleService scheduleService;
 
-	@Autowired
-	private SessionService sessionService;
+	private final SessionService sessionService;
+	
+	public ScheduleController(ScheduleService scheduleService, SessionService sessionService) {
+		this.scheduleService = scheduleService;
+		this.sessionService = sessionService;
+	}
 
 	@GetMapping
 	@Cacheable(value = "scheduleList")

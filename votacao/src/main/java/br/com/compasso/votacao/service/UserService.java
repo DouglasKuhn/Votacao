@@ -2,7 +2,6 @@ package br.com.compasso.votacao.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.compasso.votacao.entity.User;
@@ -11,8 +10,11 @@ import br.com.compasso.votacao.repository.UserRepository;
 @Service
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public User getOne(Long id) {
 		return userRepository.getOne(id);
