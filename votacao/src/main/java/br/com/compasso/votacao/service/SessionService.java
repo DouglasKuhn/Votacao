@@ -3,7 +3,6 @@ package br.com.compasso.votacao.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,14 @@ import br.com.compasso.votacao.repository.SessionRepository;
 @Service
 public class SessionService {
 
-	@Autowired
-	private SessionRepository sessionRepository;
+	private final SessionRepository sessionRepository;
 
-	@Autowired
-	private ScheduleService scheduleService;
+	private final ScheduleService scheduleService;
+
+	public SessionService(SessionRepository sessionRepository, ScheduleService scheduleService) {
+		this.sessionRepository = sessionRepository;
+		this.scheduleService = scheduleService;
+	}
 
 	public Session getOne(Long id) {
 		Optional<Session> session = sessionRepository.findById(id);

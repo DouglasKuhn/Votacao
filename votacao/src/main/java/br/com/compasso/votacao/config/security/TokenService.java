@@ -2,7 +2,6 @@ package br.com.compasso.votacao.config.security;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class TokenService {
 	
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
 	@Value("${votacao.jwt.expiration}")
 	private String expiration;
@@ -25,8 +23,11 @@ public class TokenService {
 	@Value("${votacao.jwt.secret}")
 	private String secret;
 	
+	public TokenService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
 	public String generateTokentest(User logged) {
-//		User logged = user;
 		Date now = new Date();
 		Date expirationDate = new Date(now.getTime() + Long.parseLong("86400000"));
 		return Jwts.builder()

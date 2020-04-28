@@ -1,5 +1,6 @@
 package br.com.compasso.votacao.controller;
 
+
 import br.com.compasso.votacao.controller.dto.DetailedScheduleDto;
 import br.com.compasso.votacao.controller.dto.ScheduleDto;
 import br.com.compasso.votacao.controller.dto.SessionDto;
@@ -10,7 +11,6 @@ import br.com.compasso.votacao.entity.Schedule;
 import br.com.compasso.votacao.entity.Session;
 import br.com.compasso.votacao.service.ScheduleService;
 import br.com.compasso.votacao.service.SessionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -30,17 +30,22 @@ import java.util.Optional;
 @RequestMapping("/schedules")
 public class ScheduleController {
 
-    @Autowired
-    private ScheduleService scheduleService;
 
-    @Autowired
-    private SessionService sessionService;
+    private final ScheduleService scheduleService;
 
-    @Autowired
-    private ScheduleConverter scheduleConverter;
+    private final SessionService sessionService;
 
-    @Autowired
-    private SessionConverter sessionConverter;
+    private final ScheduleConverter scheduleConverter;
+
+    private final SessionConverter sessionConverter;
+
+    public ScheduleController(ScheduleService scheduleService, SessionService sessionService,
+                              ScheduleConverter scheduleConverter, SessionConverter sessionConverter) {
+        this.scheduleService = scheduleService;
+        this.sessionService = sessionService;
+        this.scheduleConverter = scheduleConverter;
+        this.sessionConverter = sessionConverter;
+    }
 
     @GetMapping
     @Cacheable(value = "scheduleList")

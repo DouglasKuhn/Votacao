@@ -2,7 +2,6 @@ package br.com.compasso.votacao.controller;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,11 +20,14 @@ import br.com.compasso.votacao.controller.form.LoginForm;
 @RequestMapping("/auth")
 public class AuthenticationController {
 	
-	@Autowired
-	private AuthenticationManager authManager;
+	private final AuthenticationManager authManager;
 	
-	@Autowired
-	private TokenService tokenService;
+	private final TokenService tokenService;
+
+	public AuthenticationController(AuthenticationManager authManager, TokenService tokenService) {
+		this.authManager = authManager;
+		this.tokenService = tokenService;
+	}
 
 	@PostMapping
 	public ResponseEntity<TokenDto> authenticate(@RequestBody @Valid LoginForm form) {

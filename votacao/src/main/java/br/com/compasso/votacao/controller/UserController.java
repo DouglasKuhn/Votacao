@@ -5,7 +5,6 @@ import br.com.compasso.votacao.controller.form.UserForm;
 import br.com.compasso.votacao.converter.UserConverter;
 import br.com.compasso.votacao.entity.User;
 import br.com.compasso.votacao.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +19,14 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private UserConverter userConverter;
+    private final UserConverter userConverter;
+
+    public UserController(UserService userService, UserConverter userConverter) {
+        this.userService = userService;
+        this.userConverter = userConverter;
+    }
 
     @GetMapping
     public ResponseEntity<List<UserDto>> list() {
@@ -32,6 +34,7 @@ public class UserController {
         List<UserDto> usersDto = userConverter.userListToUserDtoList(userService.getAll());
         return new ResponseEntity<>(usersDto, HttpStatus.OK);
     }
+
 
     @PostMapping
     @Transactional

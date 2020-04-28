@@ -1,6 +1,5 @@
 package br.com.compasso.votacao.config.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,12 +17,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 
-	@Autowired
-	private AuthenticationService authenticationService;
+	private final AuthenticationService authenticationService;
 	
-	@Autowired
-	private TokenService tokenService;
+	private final TokenService tokenService;
 	
+	public SecurityConfigurations(AuthenticationService authenticationService, TokenService tokenService) {
+		this.authenticationService = authenticationService;
+		this.tokenService = tokenService;
+	}
+
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
