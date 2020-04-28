@@ -29,8 +29,5 @@ public class UserDto {
 		return email;
 	}
 
-	public static List<UserDto> converter(List<User> users) {
-		return users.stream().map(UserDto::new).collect(Collectors.toList());
-	}
 
 }

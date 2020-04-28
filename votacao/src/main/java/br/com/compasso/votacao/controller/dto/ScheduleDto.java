@@ -27,8 +27,4 @@ public class ScheduleDto {
 		return description;
 	}
 
-	public static Page<ScheduleDto> converter(Page<Schedule> schedule) {
-		return schedule.map(ScheduleDto::new);
-	}
-
 }
