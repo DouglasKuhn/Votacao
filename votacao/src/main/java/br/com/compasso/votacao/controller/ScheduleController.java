@@ -52,15 +52,14 @@ public class ScheduleController {
     public Page<ScheduleDto> list(@RequestParam(required = false) Optional<String> scheduleTitle,
                                   @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        //TODO remover comentarios e falar sobre a adicao do optional
+        Page<Schedule> schedules;
         if (scheduleTitle.isEmpty()) {
-            Page<Schedule> schedules = scheduleService.getAll(pageable);
-            return scheduleConverter.scheduleListToListScheduleDto(schedules);
-//			return ScheduleDto.converter(schedules);
+            schedules = scheduleService.getAll(pageable);
         } else {
-            Page<Schedule> schedules = scheduleService.findByTitle(scheduleTitle.get(), pageable);
-            return scheduleConverter.scheduleListToListScheduleDto(schedules);
+            schedules = scheduleService.findByTitle(scheduleTitle.get(), pageable);
         }
+        return scheduleConverter.scheduleListToListScheduleDto(schedules);
+
     }
 
     @PostMapping

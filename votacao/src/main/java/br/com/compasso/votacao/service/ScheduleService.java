@@ -1,33 +1,41 @@
 package br.com.compasso.votacao.service;
 
-import java.util.Optional;
-
-import javax.validation.Valid;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import br.com.compasso.votacao.controller.form.ScheduleForm;
+import br.com.compasso.votacao.converter.SessionConverter;
 import br.com.compasso.votacao.entity.Schedule;
 import br.com.compasso.votacao.entity.Session;
 import br.com.compasso.votacao.enumeration.EnumStatusSchedule;
 import br.com.compasso.votacao.repository.ScheduleRepository;
+import br.com.compasso.votacao.repository.SessionRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
+import java.util.Optional;
 
 @Service
 public class ScheduleService {
 
 	private final ScheduleRepository scheduleRepository;
-
 	private final UserService userService;
+	//TODO remover comentarios, contrutor incluso
+	//------------------------------------
+	private final SessionConverter sessionConverter;
+	private final SessionRepository sessionRepository;
+	//------------------------------------
 
-	private final SessionService sessionService;
+	//private final SessionService sessionService;
 	
 	public ScheduleService(ScheduleRepository scheduleRepository, UserService userService,
-			SessionService sessionService) {
+						   SessionConverter sessionConverter, SessionRepository sessionRepository) {
 		this.scheduleRepository = scheduleRepository;
 		this.userService = userService;
-		this.sessionService = sessionService;
+		//---------------------------------
+		this.sessionConverter = sessionConverter;
+		this.sessionRepository = sessionRepository;
+		//---------------------------------
+		//this.sessionService = sessionService;
 	}
 
 	public Schedule getOne(Long id) {
@@ -50,9 +58,14 @@ public class ScheduleService {
 		return new Schedule(userService.getOne(form.getUserId()), form.getTitle(), form.getDescription());
 	}
 
+	//TODO revisar metodo
+//	public void createSession(Schedule schedule, int timeInMinutes) {
+//		Session session = sessionService.createSession(schedule, timeInMinutes);
+//		sessionService.save(session);
+//	}
 	public void createSession(Schedule schedule, int timeInMinutes) {
-		Session session = sessionService.createSession(schedule, timeInMinutes);
-		sessionService.save(session);
+		Session session = sessionConverter.scheduleToSession(schedule, timeInMinutes);
+		sessionRepository.save(session);
 	}
 
 	public void closeSchedule(Session session) {

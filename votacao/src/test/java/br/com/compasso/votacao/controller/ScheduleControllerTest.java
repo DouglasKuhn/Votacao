@@ -1,9 +1,15 @@
 package br.com.compasso.votacao.controller;
 
-import static org.mockito.Mockito.when;
-
-import org.junit.Test;
+import br.com.compasso.votacao.config.security.AuthenticationService;
+import br.com.compasso.votacao.config.security.TokenService;
+import br.com.compasso.votacao.controller.form.ScheduleForm;
+import br.com.compasso.votacao.entity.Schedule;
+import br.com.compasso.votacao.entity.User;
+import br.com.compasso.votacao.service.ScheduleService;
+import br.com.compasso.votacao.service.SessionService;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -18,15 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.google.gson.Gson;
-
-import br.com.compasso.votacao.config.security.AuthenticationService;
-import br.com.compasso.votacao.config.security.TokenService;
-import br.com.compasso.votacao.controller.form.ScheduleForm;
-import br.com.compasso.votacao.entity.Schedule;
-import br.com.compasso.votacao.entity.User;
-import br.com.compasso.votacao.service.ScheduleService;
-import br.com.compasso.votacao.service.SessionService;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ScheduleController.class)
